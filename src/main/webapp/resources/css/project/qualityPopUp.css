@@ -1,0 +1,43 @@
+@charset "UTF-8";
+	
+	table {
+		margin : 30px 30px 30px 50px;
+		border-bottom: 2px solid #ddd;
+		border-top: 2px solid #ddd;
+	}
+	
+	.th{
+		background: #eee;
+		text-align: center;
+		height: 50px;
+	}
+	
+	tr {
+		border-bottom: 2px solid #ddd;
+		border-top: 2px solid #ddd;
+	}
+	
+	.star{
+		color: red;
+	}
+	
+	select {
+		margin-left : 10px;
+		width: 60%;
+		height: 26px;
+	}
+	
+	input {
+		margin-left : 10px;
+		width: 80%;
+	}
+	
+	.btn_div {
+		text-align: center;
+	}
+	.btn_div > button {
+		margin: 0 10px;
+		padding : 5 30px;
+		width: 120px;
+		background: white;
+	}

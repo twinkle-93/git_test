@@ -1,0 +1,24 @@
+@charset "UTF-8";
+
+	.th{
+		background: #eee;
+		text-align: center;
+	}
+	.table{
+		margin : 0;
+		border-bottom: 2px solid #ddd;
+		border-top: 2px solid #ddd;
+	}
+	.row {
+		width: 100%;
+	}
+	.project_Id{
+		width: 30%;
+		height: 26px;
+	}
+	.project_name{
+		width: 100%;
+	}
+	.star{
+		color: red;
+	}

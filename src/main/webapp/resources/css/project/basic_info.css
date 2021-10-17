@@ -1,0 +1,59 @@
+@charset "UTF-8";
+	.pjId {
+		width: 20%;
+		height: 26px;
+	}
+	
+	.pjName{
+		width: 70%;
+	}
+
+	.th{
+		background: #eee;
+		text-align: center;
+	}
+	.table{
+		border-bottom: 2px solid #ddd;
+		border-top: 2px solid #ddd;
+		margin-bottom: 30px;
+	}
+	.row {
+		width: 100%;
+	}
+	.project_Id{
+		width: 40%;
+	}
+	.project_name{
+		width: 100%;
+	}
+	.star{
+		color: red;
+	}
+	
+	.btn_div {
+		text-align: center;
+	}
+	.btn_div > button {
+		margin: 0 10px;
+		padding : 5 30px;
+		width: 120px;
+		background: white;
+	}
+	
+	.qlu_btn {
+		padding : 5 30px;
+		width: 120px;
+		background: white;
+	}
+	
+	.writer, .regDate, .planMM, .executionMM, .ordersPrice, .executionPrice {
+	    width : 100%;
+	}
+	
+	.startDate, .endDate {
+	    width : 90%;
+	}
+	
+	.manager, .executionPM  {
+	    width : 50%;
+	}

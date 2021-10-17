@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="kr.co.dao.projectMapper">
+  	
+  	<!-- 기본정보 insert -->
+	  <insert id="basic_info_insert">
+	  	insert into pj_basic_info 
+	  	(pjId, pjName, writer, regDate, startDate,endDate,pjMan,planMM,exeMM,exePM,price,exePrice) 
+	  	values(
+	  	#{pjId},
+	  	#{pjName},
+	  	#{writer},
+	  	#{regDate},
+	  	#{startDate},
+	  	#{endDate},
+	  	#{pjMan},
+	  	#{planMM},
+	  	#{exeMM},
+	  	#{exePM},
+	  	#{price},
+	  	#{exePrice})
+	  </insert>
+	  
+	  <insert id="schedule_insert">
+	  	insert into schedule 
+	  	values(
+	  	(SELECT nvl2(max(no), max(no)+1, 1) FROM schedule),
+	  	#{pjId},
+	  	#{pjName},
+	  	#{scId},
+	  	#{scName},
+	  	#{scRegDate},
+	 	#{scWriter},
+	  	#{msId},
+	  	#{msName},
+	  	#{upMs},
+	  	#{downMs},
+	  	#{msRegDate},
+	  	#{msWriter}
+	  	)
+	  </insert>
+	  
+	 <!-- 리스크 insert -->
+	  <insert id="risk_insert">
+	  	insert into risk
+	  	(pjId, pjName, riskId, riskName, riskRegDate,riskWriter,riskContent) 
+	  	values(
+	  	#{pjId},
+	  	#{pjName},
+	  	#{riskId},
+	  	#{riskName},
+	  	#{riskRegDate},
+	  	#{riskWriter},
+	  	#{riskContent}
+	  	)
+	  </insert>
+	  
+	 <!-- pjId,pjName을 가져오게 임시 생성 -->
+	  <select id="PJlist" resultType="kr.co.domain.ProjectVO">
+	  	SELECT * FROM pj_basic_info order by pjId asc
+	  </select>
+	  
+	  <select id="rangeList" resultType="kr.co.domain.ProgressVO">
+	  	SELECT rangeId, rangeName FROM progress order by rangeId asc
+	  </select>
+	  
+	  <select id="quaList" resultType="kr.co.domain.QualityVO">
+	  	SELECT quaId, quaName FROM quality order by quaId asc
+	  </select>
+	  
+	  <select id="riskList" resultType="kr.co.domain.RiskVO">
+	  	SELECT riskId, riskName FROM risk order by riskId asc
+	  </select>
+	  
+	  <insert id="mobile_insert">
+	  	insert into mobile 
+	  	values(
+	  	#{pjId},
+	  	#{pjName},
+	  	#{rangeId},
+	  	#{rangeName},
+	  	#{rangeNum},
+	  	#{quaId},
+	 	#{quaName},
+	  	#{quaNum},
+	  	#{riskId},
+	  	#{riskName},
+	  	#{riskNum}
+	  	)
+	  </insert>
+	  
+	  <insert id="progress_insert">
+	  	insert into progress 
+	  	values(
+	  	#{pjId},
+	  	#{pjName},
+	  	#{rangeId},
+	  	#{rangeName},
+	  	#{rangeRegDate},
+	  	#{rangeWriter},
+	 	#{timeId},
+	  	#{timeName},
+	  	#{timeRegDate},
+	  	#{timeWriter}
+	  	)
+	  </insert>
+	  
+	  <select id="progress_list" resultType="kr.co.domain.ProgressVO">
+	  	SELECT * FROM progress ORDER BY rangeId DESC
+	  </select>
+	  
+	  <select id="progress_read" resultType="kr.co.domain.ProgressVO">
+	  	SELECT * FROM progress WHERE pjName = #{pjName}
+	  </select>
+	  
+	  <update id="progress_update">
+	  	UPDATE progress
+	  	SET
+	  	pjName = #{pjName},
+	  	rangeId = #{rangeId},
+	  	rangeName = #{rangeName},
+	  	rangeRegDate = #{rangeRegDate},
+	  	rangeWriter = #{rangeWriter},
+	  	timeId = #{timeId},
+	  	timeName = #{timeName},
+	  	timeRegDate = #{timeRegDate},
+	  	timeWriter = #{timeWriter}
+	  	WHERE pjName = #{pjName}
+	  </update>
+	  
+	  <delete id="progress_delete">
+	  	DELETE FROM progress
+	  	WHERE
+	  	pjName = #{pjName}
+	  </delete>
+	  
+	  <select id="getList" resultType="kr.co.domain.GetoutputsVO">
+  select * from tbl_board order by bno desc   <!-- ;절대 붙이지 말것 -->
+  </select>
+  
+  
+     <select id="getListWithPaging" resultType="kr.co.domain.GetoutputsVO">
+    
+   <![CDATA[
+ select bno, pname, sname , stitle, user_id, sysdatee from (
+ 
+   select /*+ INDEX_DESC(tbl_list pk_list) */ rownum as rn, bno, pname, sname , stitle, user_id, sysdatee
+
+   from deliverables 
+   Where rownum <= (#{pageNum} * #{amount})
+  ]]>     <if test="keyword != null">
+                    and pname like '%'||#{keyword}||'%' 
+                </if>   )
+    <![CDATA[            
+        where rn > (#{pageNum} -1) * #{amount}
+      ]]>   
+        </select>
+        
+    <select id="getTotal" resultType="int">
+    
+        select count(*) from deliverables
+        
+        <if test="keyword != null">
+        
+            <!-- Oracle -->
+            where pname like '%'||#{keyword}||'%'
+        
+        </if>
+ 
+    </select>
+    
+    <insert id="quality_insert">
+    	insert into quality
+	  	(pjId, pjName, quaId, quaName,quaEvaName, quaRegDate,quaWriter) 
+	  	values(
+	  	#{pjId},
+	  	#{pjName},
+	  	#{quaId},
+	  	#{quaName},
+	  	#{quaEvaName},
+	  	#{quaRegDate},
+	  	#{quaWriter}
+	  	)
+    </insert>
+    
+    <select id="qualityPopUp" resultType="kr.co.domain.QualityVO">
+    	select quaCode,quaEvaName from quality
+    </select>
+    
+    <select id="QuaCodeList" resultType="kr.co.domain.QualityCodeVO">
+	  	SELECT * FROM QualityCode order by quaCode asc
+	</select>
+	
+	<insert id="communication_insert">
+		insert into communication
+	  	(regDate, writer, category, 
+	  	 noticeNo,noticeTitle, noticeContents,
+	  	 conferenceNo,conferenceTitle, conferenceContents,
+	  	 freeBoardNo,freeBoardTitle, freeBoardContents) 
+	  	 <choose>
+	  		<when test="category == '공지사항'">
+  			 	values(
+				  	#{regDate},
+				  	#{writer},
+				  	#{category},
+				  	(SELECT nvl2(max(noticeNo), max(noticeNo)+1, 1) FROM communication),
+				  	#{noticeTitle},
+				  	#{noticeContents},
+				  	0,
+				  	#{conferenceTitle},
+				  	#{conferenceContents},
+				  	0,
+				  	#{freeBoardTitle},
+				  	#{freeBoardContents}
+				  	)
+	  		</when>
+	  		<when test="category == '회의록'">
+	  			values(
+				  	#{regDate},
+				  	#{writer},
+				  	#{category},
+				  	0,
+				  	#{noticeTitle},
+				  	#{noticeContents},
+				  	(SELECT nvl2(max(conferenceNo), max(conferenceNo)+1, 1) FROM communication),
+				  	#{conferenceTitle},
+				  	#{conferenceContents},
+				  	0,
+				  	#{freeBoardTitle},
+				  	#{freeBoardContents}
+				  	)
+	  		</when>
+	  		<otherwise>
+	  			values(
+				  	#{regDate},
+				  	#{writer},
+				  	#{category},
+				  	0,
+				  	#{noticeTitle},
+				  	#{noticeContents},
+				  	0,
+				  	#{conferenceTitle},
+				  	#{conferenceContents},
+				  	(SELECT nvl2(max(freeBoardNo), max(freeBoardNo)+1, 1) FROM communication),
+				  	#{freeBoardTitle},
+				  	#{freeBoardContents}
+				  	)
+	  		</otherwise>
+	  	</choose>
+	</insert>
+	
+	<select id="noticeNo" resultType="kr.co.domain.CommunicationVO">
+		SELECT noticeNo FROM communication
+		WHERE noticeNo = (SELECT max(noticeNo) FROM communication)
+	</select>
+	
+	<select id="conferenceNo" resultType="kr.co.domain.CommunicationVO">
+		SELECT conferenceNo FROM communication
+		WHERE conferenceNo = (SELECT max(conferenceNo) FROM communication)
+	</select>
+	
+	<select id="freeBoardNo" resultType="kr.co.domain.CommunicationVO">
+		SELECT freeBoardNo FROM communication
+		WHERE freeBoardNo = (SELECT max(freeBoardNo) FROM communication)
+	</select>
+	  
+  
+  </mapper>

@@ -1,0 +1,92 @@
+@charset "UTF-8";
+
+	.body {
+		height: 750px;
+	}
+	
+	/* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 696px;}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 30px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: 100%;
+        padding: 15px;
+      }
+    .row.content {height:100%;
+    } 
+    }
+    
+    .navbar-collapse{
+    	background-color: #101010;
+    }
+    .navbar-nav > li > a {
+    	color : white;
+    }
+    
+    .navbar-nav > .menu > a {
+    	color : white;
+    }
+    
+    .main_menu > li {
+    	list-style: none;
+  		line-height: 34px;
+    }
+    
+    .main_menu > li > a{
+		display: block; /* 범위 확장 */
+		text-decoration: none;
+		color: white;
+		text-align: center;
+		background: #4e5569;
+		width: 200px;
+    }
+    
+    .main_menu > li > a:hover{
+    	background: #4e5569;
+    }
+    
+    .main_menu > li > a:focus{
+    	background: #4e5569;
+    }
+
+	.selec { background: #c45; color: #efefef; } /* 임시 클래스(선택) */
+	
+    .snd_menu { background:  #b1b7c5;
+    			text-align: center;
+     }
+	.trd_menu { background: #ddd;
+				text-align: center;
+	 }
+	.sub_menu { display: none; } /* 서브메뉴들 숨김 */
+    
+   
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

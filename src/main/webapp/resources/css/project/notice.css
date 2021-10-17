@@ -1,0 +1,23 @@
+@charset "UTF-8";
+
+	.th{
+		background: #eee;
+		text-align: center;
+	}
+	.table{
+		margin : 0;
+		border-bottom: 2px solid #ddd;
+		border-top: 2px solid #ddd;
+	}
+	.row {
+		width: 100%;
+	}
+	.project_date{
+		width: 60%;
+	}
+	.project_writer{
+		width: 80%;
+	}
+	.star{
+		color: red;
+	}
